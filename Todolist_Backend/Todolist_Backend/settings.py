@@ -37,6 +37,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #custom inmported app
+    'authenticate.apps.AuthenticateConfig',
+    'rest_framework',
+    'corsheaders',
+
+    #local built apps
+    'Static_Pages.apps.StaticPagesConfig',
+    'Help_Centre.apps.HelpCentreConfig',
+   #'Data_Structure.apps.DataStructureConfig',
+    'API.apps.ApiConfig'
+
+
 ]
 
 MIDDLEWARE = [
@@ -47,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'Todolist_Backend.urls'
@@ -116,5 +131,22 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
+# in development this is replaced by cloudinary and css+javacsript are placed in the html file
 STATIC_URL = '/static/'
+
+#this is the redicet Url after sucessfull login
+LOGIN_REDIRECT_URL = "home"
+
+# this means it will allow all CORS request for the Vue app
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8080',
+)
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
+    ]
+}
